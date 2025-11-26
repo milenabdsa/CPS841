@@ -35,13 +35,17 @@ N = 12
 circularThermometer = False
 nBits = 4
 
+LIGHT= True
+
+range_max= 100 if LIGHT else 10000 
+range_increase=100 if LIGHT else 1000
 # Process both train and validation datasets
 for dataset_type in ['train', 'val']:
-    for i in range(0,10000,1000):
+    for i in range(0,range_max,range_increase):
         # ==================================== #
         # DEBUG OPTIONS
         inicio = i
-        fim = i + 1000 if i + 1000 < 9101 else 9100
+        fim = i + range_increase if i + range_increase < 9101 else 9100
         tamanho = fim-inicio
 
         # ==================================== #
