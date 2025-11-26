@@ -1,0 +1,2 @@
+- For Loop implementado no gerarpickle.py para fazer toda a binarizacao usando termotetro
+- K-Fold Train e test (ainda nao)
