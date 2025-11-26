@@ -104,47 +104,74 @@ print("Done!")
 # =========================================================================================================#
 print("Importing data...")
 
-with open("thermometer12_X.p", "rb") as input_file:
-  X = pd.read_pickle(input_file, compression=None)
+# Load training data
+with open("thermometer12_train_X.p", "rb") as input_file:
+  X_train = pd.read_pickle(input_file, compression=None)
 
-print("X imported")
+print("X_train imported")
 
-with open("thermometer12_y.p", "rb") as input_file:
-  y = pd.read_pickle(input_file, compression=None)
+with open("thermometer12_train_y.p", "rb") as input_file:
+  y_train = pd.read_pickle(input_file, compression=None)
 
-print("y imported")
+print("y_train imported")
+
+# Load validation data
+with open("thermometer12_val_X.p", "rb") as input_file:
+  X_val = pd.read_pickle(input_file, compression=None)
+
+print("X_val imported")
+
+with open("thermometer12_val_y.p", "rb") as input_file:
+  y_val = pd.read_pickle(input_file, compression=None)
+
+print("y_val imported")
 
 gc.collect()
 
-# ===================== LIMITAR NÚMERO DE AMOSTRAS =====================
-print("Dataset completo: ", len(X), "amostras")
-if len(X) > MAX_SAMPLES:
-    from sklearn.model_selection import train_test_split
-    print(f"Reduzindo para {MAX_SAMPLES} amostras para acelerar o experimento...")
-    _, X_sample, _, y_sample = model_selection.train_test_split(
-        X, y,
-        test_size=MAX_SAMPLES,
-        stratify=y,
-        random_state=42
-    )
-    X = X_sample
-    y = y_sample
-    print("Novo tamanho do dataset:", len(X))
-else:
-    print("Mantendo todas as amostras.")
-# ======================================================================
+# # ===================== LIMITAR NÚMERO DE AMOSTRAS =====================
+# print("Dataset completo: ", len(X_train), "amostras")
+# if len(X_train) > MAX_SAMPLES:
+#     from sklearn.model_selection import train_test_split
+#     print(f"Reduzindo para {MAX_SAMPLES} amostras para acelerar o experimento...")
+#     _, X_sample, _, y_sample = model_selection.train_test_split(
+#         X_train, y_train,
+#         test_size=MAX_SAMPLES,
+#         stratify=y_train,
+#         random_state=42
+#     )
+#     X_train = X_sample
+#     y_train = y_sample
+#     print("Novo tamanho do dataset:", len(X_train))
+# else:
+#     print("Mantendo todas as amostras.")
+# # ======================================================================
 
-for i in range(len(y)):
-  if y[i] in allClasses['adware']:
-    y[i] = 'adware'
-  elif y[i] in allClasses['Trojan']:
-    y[i] = 'Trojan'
-  elif y[i] in allClasses['Worm']:
-    y[i] = 'Worm'
-  elif y[i] in allClasses['Backdoor']:
-    y[i] = 'Backdoor'
-  elif y[i] in allClasses['Virus']:
-    y[i] = 'Virus'
+# Map training labels to broader categories
+for i in range(len(y_train)):
+  if y_train[i] in allClasses['adware']:
+    y_train[i] = 'adware'
+  elif y_train[i] in allClasses['Trojan']:
+    y_train[i] = 'Trojan'
+  elif y_train[i] in allClasses['Worm']:
+    y_train[i] = 'Worm'
+  elif y_train[i] in allClasses['Backdoor']:
+    y_train[i] = 'Backdoor'
+  elif y_train[i] in allClasses['Virus']:
+    y_train[i] = 'Virus'
+  gc.collect()
+
+# Map validation labels to broader categories
+for i in range(len(y_val)):
+  if y_val[i] in allClasses['adware']:
+    y_val[i] = 'adware'
+  elif y_val[i] in allClasses['Trojan']:
+    y_val[i] = 'Trojan'
+  elif y_val[i] in allClasses['Worm']:
+    y_val[i] = 'Worm'
+  elif y_val[i] in allClasses['Backdoor']:
+    y_val[i] = 'Backdoor'
+  elif y_val[i] in allClasses['Virus']:
+    y_val[i] = 'Virus'
   gc.collect()
 
 print("Done!")
@@ -161,17 +188,15 @@ accuracy = []
 train = []
 test = []
 
+# Get unique classes from training data
+unique_classes = list(dict.fromkeys(y_train))
+
 for i in range(numberOfRuns):
-    X_traincv, X_testcv, y_traincv, y_testcv = model_selection.train_test_split(X,
-                                                   	                            y,
-                                                                            	  test_size=SPLIT_SIZE,
-                                                                            	  random_state=0)
-    # Salvar classes únicas antes de deletar y
-    unique_classes = list(dict.fromkeys(y))
-    
-    if numberOfRuns == 1:
-        del X
-        del y
+    # Use pre-split train and validation data
+    X_traincv = X_train
+    y_traincv = y_train
+    X_testcv = X_val
+    y_testcv = y_val
    
     if wisard:
         print("WiSARD")

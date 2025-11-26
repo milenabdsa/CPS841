@@ -14,242 +14,92 @@ def load_images_from_folder(folder):
     return images
 
 print("Importing data")
+class_mapping = {
+    'Adposhel': {'y_26': 'Adposhel', 'y_2': 'Malign', 'y_6': 'adware'},
+    'Agent': {'y_26': 'Agent', 'y_2': 'Malign', 'y_6': 'Trojan'},
+    'Allaple': {'y_26': 'Allaple', 'y_2': 'Malign', 'y_6': 'Worm'},
+    'Amonetize': {'y_26': 'Amonetize', 'y_2': 'Malign', 'y_6': 'adware'},
+    'Androm': {'y_26': 'Androm', 'y_2': 'Malign', 'y_6': 'Backdoor'},
+    'Autorun': {'y_26': 'Autorun', 'y_2': 'Malign', 'y_6': 'Worm'},
+    'BrowseFox': {'y_26': 'BrowseFox', 'y_2': 'Malign', 'y_6': 'adware'},
+    'Dinwod': {'y_26': 'Dinwod', 'y_2': 'Malign', 'y_6': 'Trojan'},
+    'Elex': {'y_26': 'Elex', 'y_2': 'Malign', 'y_6': 'Trojan'},
+    'Expiro': {'y_26': 'Expiro', 'y_2': 'Malign', 'y_6': 'Virus'},
+    'Fasong': {'y_26': 'Fasong', 'y_2': 'Malign', 'y_6': 'Worm'},
+    'HackKMS': {'y_26': 'HackKMS', 'y_2': 'Malign', 'y_6': 'Trojan'},
+    'Hlux': {'y_26': 'Hlux', 'y_2': 'Malign', 'y_6': 'Worm'},
+    'Injector': {'y_26': 'Injector', 'y_2': 'Malign', 'y_6': 'Trojan'},
+    'InstallCore': {'y_26': 'InstallCore', 'y_2': 'Malign', 'y_6': 'adware'},
+    'MultiPlug': {'y_26': 'MultiPlug', 'y_2': 'Malign', 'y_6': 'adware'},
+    'Neoreklami': {'y_26': 'Neoreklami', 'y_2': 'Malign', 'y_6': 'adware'},
+    'Neshta': {'y_26': 'Neshta', 'y_2': 'Malign', 'y_6': 'Virus'},
+    'Other': {'y_26': 'Benign', 'y_2': 'Benign', 'y_6': 'Benign'},
+    'Regrun': {'y_26': 'Regrun', 'y_2': 'Malign', 'y_6': 'Trojan'},
+    'Sality': {'y_26': 'Sality', 'y_2': 'Malign', 'y_6': 'Virus'},
+    'Snarasite': {'y_26': 'Snarasite', 'y_2': 'Malign', 'y_6': 'Trojan'},
+    'Stantinko': {'y_26': 'Stantinko', 'y_2': 'Malign', 'y_6': 'Backdoor'},
+    'VBA': {'y_26': 'VBA', 'y_2': 'Malign', 'y_6': 'Virus'},
+    'VBKrypt': {'y_26': 'VBKrypt', 'y_2': 'Malign', 'y_6': 'Trojan'},
+    'Vilsel': {'y_26': 'MultiPlug', 'y_2': 'Malign', 'y_6': 'Trojan'}
+}
 
-img = load_images_from_folder('malevis_train_val_224x224/train/Adposhel')
-length = len(img)
-data = img
-y_26 = ['Adposhel']*length
-y_2 = ['Malign']*length
-y_6 = ['adware']*length
-del img
-gc.collect()
+data = []
+y_26 = []
+y_2 = []
+y_6 = []
 
-img = load_images_from_folder('malevis_train_val_224x224/train/Agent')
-length = len(img)
-data = np.concatenate((data, img), axis=0)
-y_26 = np.concatenate((y_26,['Agent']*length),axis=0)
-y_2 = np.concatenate((y_2,['Malign']*length),axis=0)
-y_6 = np.concatenate((y_6,['Trojan']*length),axis=0)
-del img
-gc.collect()
+for class_name, labels in class_mapping.items():
+    img = load_images_from_folder(f'malevis_train_val_224x224/train/{class_name}')
+    length = len(img)
+    
+    if length > 0:
+        data.extend(img)
+        y_26.extend([labels['y_26']] * length)
+        y_2.extend([labels['y_2']] * length)
+        y_6.extend([labels['y_6']] * length)
+    
+    del img
+    gc.collect()
 
-img = load_images_from_folder('malevis_train_val_224x224/train/Allaple')
-length = len(img)
-data = np.concatenate((data, img), axis=0)
-y_26 = np.concatenate((y_26,['Allaple']*length),axis=0)
-y_2 = np.concatenate((y_2,['Malign']*length),axis=0)
-y_6 = np.concatenate((y_6,['Worm']*length),axis=0)
-del img
-gc.collect()
+data = np.array(data)
+y_26 = np.array(y_26)
+y_2 = np.array(y_2)
+y_6 = np.array(y_6)
 
-img = load_images_from_folder('malevis_train_val_224x224/train/Amonetize')
-length = len(img)
-data = np.concatenate((data, img), axis=0)
-y_26 = np.concatenate((y_26,['Amonetize']*length),axis=0)
-y_2 = np.concatenate((y_2,['Malign']*length),axis=0)
-y_6 = np.concatenate((y_6,['adware']*length),axis=0)
-del img
-gc.collect()
-
-img = load_images_from_folder('malevis_train_val_224x224/train/Androm')
-length = len(img)
-data = np.concatenate((data, img), axis=0)
-y_26 = np.concatenate((y_26,['Androm']*length),axis=0)
-y_2 = np.concatenate((y_2,['Malign']*length),axis=0)
-y_6 = np.concatenate((y_6,['Backdoor']*length),axis=0)
-del img
-gc.collect()
-
-img = load_images_from_folder('malevis_train_val_224x224/train/Autorun')
-length = len(img)
-data = np.concatenate((data, img), axis=0)
-y_26 = np.concatenate((y_26,['Autorun']*length),axis=0)
-y_2 = np.concatenate((y_2,['Malign']*length),axis=0)
-y_6 = np.concatenate((y_6,['Worm']*length),axis=0)
-del img
-gc.collect()
-
-img = load_images_from_folder('malevis_train_val_224x224/train/BrowseFox')
-length = len(img)
-data = np.concatenate((data, img), axis=0)
-y_26 = np.concatenate((y_26,['BrowseFox']*length),axis=0)
-y_2 = np.concatenate((y_2,['Malign']*length),axis=0)
-y_6 = np.concatenate((y_6,['adware']*length),axis=0)
-del img
-gc.collect()
-
-img = load_images_from_folder('malevis_train_val_224x224/train/Dinwod')
-length = len(img)
-data = np.concatenate((data, img), axis=0)
-y_26 = np.concatenate((y_26,['Dinwod']*length),axis=0)
-y_2 = np.concatenate((y_2,['Malign']*length),axis=0)
-y_6 = np.concatenate((y_6,['Trojan']*length),axis=0)
-del img
-gc.collect()
-
-img = load_images_from_folder('malevis_train_val_224x224/train/Elex')
-length = len(img)
-data = np.concatenate((data, img), axis=0)
-y_26 = np.concatenate((y_26,['Elex']*length),axis=0)
-y_2 = np.concatenate((y_2,['Malign']*length),axis=0)
-y_6 = np.concatenate((y_6,['Trojan']*length),axis=0)
-del img
-gc.collect()
-
-img = load_images_from_folder('malevis_train_val_224x224/train/Expiro')
-length = len(img)
-data = np.concatenate((data, img), axis=0)
-y_26 = np.concatenate((y_26,['Expiro']*length),axis=0)
-y_2 = np.concatenate((y_2,['Malign']*length),axis=0)
-y_6 = np.concatenate((y_6,['Virus']*length),axis=0)
-del img
-gc.collect()
-
-img = load_images_from_folder('malevis_train_val_224x224/train/Fasong')
-length = len(img)
-data = np.concatenate((data, img), axis=0)
-y_26 = np.concatenate((y_26,['Fasong']*length),axis=0)
-y_2 = np.concatenate((y_2,['Malign']*length),axis=0)
-y_6 = np.concatenate((y_6,['Worm']*length),axis=0)
-del img
-gc.collect()
-
-img = load_images_from_folder('malevis_train_val_224x224/train/HackKMS')
-length = len(img)
-data = np.concatenate((data, img), axis=0)
-y_26 = np.concatenate((y_26,['HackKMS']*length),axis=0)
-y_2 = np.concatenate((y_2,['Malign']*length),axis=0)
-y_6 = np.concatenate((y_6,['Trojan']*length),axis=0)
-del img
-gc.collect()
-
-img = load_images_from_folder('malevis_train_val_224x224/train/Hlux')
-length = len(img)
-data = np.concatenate((data, img), axis=0)
-y_26 = np.concatenate((y_26,['Hlux']*length),axis=0)
-y_2 = np.concatenate((y_2,['Malign']*length),axis=0)
-y_6 = np.concatenate((y_6,['Worm']*length),axis=0)
-del img
-gc.collect()
-
-img = load_images_from_folder('malevis_train_val_224x224/train/Injector')
-length = len(img)
-data = np.concatenate((data, img), axis=0)
-y_26 = np.concatenate((y_26,['Injector']*length),axis=0)
-y_2 = np.concatenate((y_2,['Malign']*length),axis=0)
-y_6 = np.concatenate((y_6,['Trojan']*length),axis=0)
-del img
-gc.collect()
-
-img = load_images_from_folder('malevis_train_val_224x224/train/InstallCore')
-length = len(img)
-data = np.concatenate((data, img), axis=0)
-y_26 = np.concatenate((y_26,['InstallCore']*length),axis=0)
-y_2 = np.concatenate((y_2,['Malign']*length),axis=0)
-y_6 = np.concatenate((y_6,['adware']*length),axis=0)
-del img
-gc.collect()
-
-img = load_images_from_folder('malevis_train_val_224x224/train/MultiPlug')
-length = len(img)
-data = np.concatenate((data, img), axis=0)
-y_26 = np.concatenate((y_26,['MultiPlug']*length),axis=0)
-y_2 = np.concatenate((y_2,['Malign']*length),axis=0)
-y_6 = np.concatenate((y_6,['adware']*length),axis=0)
-del img
-gc.collect()
-
-img = load_images_from_folder('malevis_train_val_224x224/train/Neoreklami')
-length = len(img)
-data = np.concatenate((data, img), axis=0)
-y_26 = np.concatenate((y_26,['Neoreklami']*length),axis=0)
-y_2 = np.concatenate((y_2,['Malign']*length),axis=0)
-y_6 = np.concatenate((y_6,['adware']*length),axis=0)
-del img
-gc.collect()
-
-img = load_images_from_folder('malevis_train_val_224x224/train/Neshta')
-length = len(img)
-data = np.concatenate((data, img), axis=0)
-y_26 = np.concatenate((y_26,['Neshta']*length),axis=0)
-y_2 = np.concatenate((y_2,['Malign']*length),axis=0)
-y_6 = np.concatenate((y_6,['Virus']*length),axis=0)
-del img
-gc.collect()
-
-img = load_images_from_folder('malevis_train_val_224x224/train/Other')
-length = len(img)
-data = np.concatenate((data, img), axis=0)
-y_26 = np.concatenate((y_26,['Benign']*length),axis=0)
-y_2 = np.concatenate((y_2,['Benign']*length),axis=0)
-y_6 = np.concatenate((y_6,['Benign']*length),axis=0)
-del img
-gc.collect()
-
-img = load_images_from_folder('malevis_train_val_224x224/train/Regrun')
-length = len(img)
-data = np.concatenate((data, img), axis=0)
-y_26 = np.concatenate((y_26,['Regrun']*length),axis=0)
-y_2 = np.concatenate((y_2,['Malign']*length),axis=0)
-y_6 = np.concatenate((y_6,['Trojan']*length),axis=0)
-del img
-gc.collect()
-
-img = load_images_from_folder('malevis_train_val_224x224/train/Sality')
-length = len(img)
-data = np.concatenate((data, img), axis=0)
-y_26 = np.concatenate((y_26,['Sality']*length),axis=0)
-y_2 = np.concatenate((y_2,['Malign']*length),axis=0)
-y_6 = np.concatenate((y_6,['Virus']*length),axis=0)
-del img
-gc.collect()
-
-img = load_images_from_folder('malevis_train_val_224x224/train/Snarasite')
-length = len(img)
-data = np.concatenate((data, img), axis=0)
-y_26 = np.concatenate((y_26,['Snarasite']*length),axis=0)
-y_2 = np.concatenate((y_2,['Malign']*length),axis=0)
-y_6 = np.concatenate((y_6,['Trojan']*length),axis=0)
-del img
-gc.collect()
-
-img = load_images_from_folder('malevis_train_val_224x224/train/Stantinko')
-length = len(img)
-data = np.concatenate((data, img), axis=0)
-y_26 = np.concatenate((y_26,['Stantinko']*length),axis=0)
-y_2 = np.concatenate((y_2,['Malign']*length),axis=0)
-y_6 = np.concatenate((y_6,['Backdoor']*length),axis=0)
-del img
-gc.collect()
-
-img = load_images_from_folder('malevis_train_val_224x224/train/VBA')
-length = len(img)
-data = np.concatenate((data, img), axis=0)
-y_26 = np.concatenate((y_26,['VBA']*length),axis=0)
-y_2 = np.concatenate((y_2,['Malign']*length),axis=0)
-y_6 = np.concatenate((y_6,['Virus']*length),axis=0)
-del img
-gc.collect()
-
-img = load_images_from_folder('malevis_train_val_224x224/train/VBKrypt')
-length = len(img)
-data = np.concatenate((data, img), axis=0)
-y_26 = np.concatenate((y_26,['VBKrypt']*length),axis=0)
-y_2 = np.concatenate((y_2,['Malign']*length),axis=0)
-y_6 = np.concatenate((y_6,['Trojan']*length),axis=0)
-del img
-gc.collect()
-
-img = load_images_from_folder('malevis_train_val_224x224/train/Vilsel')
-length = len(img)
-data = np.concatenate((data, img), axis=0)
-y_26 = np.concatenate((y_26,['MultiPlug']*length),axis=0)
-y_2 = np.concatenate((y_2,['Malign']*length),axis=0)
-y_6 = np.concatenate((y_6,['Trojan']*length),axis=0)
-del img
-gc.collect()
 
 pickle.dump( data, open( "data.p", "wb" ) )
 pickle.dump( y_26, open( "y26.p", "wb" ) )
 pickle.dump( y_2, open( "y2.p", "wb" ) )
 pickle.dump( y_6, open( "y6.p", "wb" ) )
+
+# Process validation data
+print("Processing validation data")
+data_val = []
+y_26_val = []
+y_2_val = []
+y_6_val = []
+
+for class_name, labels in class_mapping.items():
+    img = load_images_from_folder(f'malevis_train_val_224x224/val/{class_name}')
+    length = len(img)
+    
+    if length > 0:
+        data_val.extend(img)
+        y_26_val.extend([labels['y_26']] * length)
+        y_2_val.extend([labels['y_2']] * length)
+        y_6_val.extend([labels['y_6']] * length)
+    
+    del img
+    gc.collect()
+
+data_val = np.array(data_val)
+y_26_val = np.array(y_26_val)
+y_2_val = np.array(y_2_val)
+y_6_val = np.array(y_6_val)
+
+pickle.dump( data_val, open( "data_val.p", "wb" ) )
+pickle.dump( y_26_val, open( "y26_val.p", "wb" ) )
+pickle.dump( y_2_val, open( "y2_val.p", "wb" ) )
+pickle.dump( y_6_val, open( "y6_val.p", "wb" ) )
+
+
