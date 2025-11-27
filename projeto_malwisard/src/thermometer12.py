@@ -24,12 +24,12 @@ interpolate = False
 FACTOR = 224
 # ==================================== #
 # WHICH BINARIZATION DO YOU WANT TO USE?
-simple = False
+simple = True
 THRESHOLD = 127
 
 dynamic = False
 
-thermometer = True
+thermometer = False
 N = 12
 
 # Choose encoding style

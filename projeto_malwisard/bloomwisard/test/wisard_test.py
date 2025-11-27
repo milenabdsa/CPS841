@@ -2,7 +2,7 @@ import numpy as np
 import sys
 import pickle
 sys.path.append("../") 
-from core import wnn
+import bloomwisard as wnn
 
 # FLAG: True = teste com Malevis dataset, False = teste original
 USE_MALEVIS = True
@@ -47,7 +47,9 @@ if USE_MALEVIS:
     # Avaliar
     print("Evaluating...")
     predictions = bwisard.rank(X_val.tolist())
-    correct = sum(1 for pred, true in zip(predictions, y_val) if pred[0] == true)
+    
+    # O rank retorna um numpy array de inteiros (a classe predita)
+    correct = sum(1 for pred, true in zip(predictions, y_val) if pred == true)
     print(f"Accuracy: {correct}/{len(y_val)} ({100*correct/len(y_val):.2f}%)")
     
     bwisard.info()
