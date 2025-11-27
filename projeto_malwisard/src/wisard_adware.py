@@ -193,25 +193,25 @@ for i in range(numberOfRuns):
         clus = wp.ClusWisard(addressSize, minScore, threshold, discriminatorLimit, verbose = True)
 
         start_train = time.time()
-        clus.train(X_traincv,y_traincv)
+        clus.train(X_train,y_train)
         finish_train = time.time()
 
         start_classify = time.time()
-        out = clus.classify(X_testcv)
+        out = clus.classify(X_val)
         finish_classify = time.time()
 
         total = 0
         corrects = 0
-        for count in range(len(y_testcv)):
-            if y_testcv[count] == out[count]:
+        for count in range(len(y_val)):
+            if y_val[count] == out[count]:
                 corrects = corrects + 1
             total = total + 1
 
-        clf_eval(confusionPlotFilename, y_testcv, out, classes = list(dict.fromkeys(y)))
+        clf_eval(confusionPlotFilename, y_val, out, classes = list(dict.fromkeys(y_val)))
         
-        f1.append(f1_score(y_testcv, out, average='weighted'))
-        precision.append(precision_score(y_testcv, out, average='weighted'))
-        recall.append(recall_score(y_testcv, out, average='weighted'))
+        f1.append(f1_score(y_val, out, average='weighted'))
+        precision.append(precision_score(y_val, out, average='weighted'))
+        recall.append(recall_score(y_val, out, average='weighted'))
         accuracy.append(float(corrects)/total)
         train.append(finish_train-start_train)
         test.append(finish_classify-start_classify)
