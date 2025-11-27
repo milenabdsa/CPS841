@@ -171,21 +171,25 @@ def get_model_info(model):
     """
     Extrai informações sobre a arquitetura do modelo
     """
+    # Pegar informações do primeiro submodelo
+    first_submodel = model.models[0]
+    
     info = {
         'num_submodels': len(model.models),
-        'input_size': model.inputs,
-        'num_classes': model.classes,
+        'input_size': first_submodel.inputs,
+        'num_classes': first_submodel.classes,
         'encoding_bits': model.encoding_bits,
-        'dropout_p': model.dropout_p,
         'configs': []
     }
     
     for i, submodel in enumerate(model.models):
         config = {
             'submodel_id': i,
-            'tuple_size': submodel.tuple_size,
-            'bleach_size': submodel.bleach_size,
-            'num_discriminators': len(submodel.discriminators)
+            'filter_inputs': submodel.filter_inputs,
+            'filter_entries': submodel.filter_entries,
+            'filter_hash_functions': submodel.filter_hash_functions,
+            'filters_per_discriminator': submodel.filters_per_discriminator,
+            'num_classes': submodel.classes
         }
         info['configs'].append(config)
     
@@ -241,15 +245,16 @@ def test_uleen_model(model_path, output_file=None):
         log_print(f"Input size: {model_info['input_size']}")
         log_print(f"Number of classes: {model_info['num_classes']}")
         log_print(f"Encoding bits: {model_info['encoding_bits']}")
-        log_print(f"Dropout probability: {model_info['dropout_p']}")
         log_print("")
         
         log_print("Submodel configurations:")
         for config in model_info['configs']:
             log_print(f"  Submodel {config['submodel_id']}: "
-                     f"tuple_size={config['tuple_size']}, "
-                     f"bleach_size={config['bleach_size']}, "
-                     f"num_discriminators={config['num_discriminators']}")
+                     f"filter_inputs={config['filter_inputs']}, "
+                     f"filter_entries={config['filter_entries']}, "
+                     f"filter_hash_functions={config['filter_hash_functions']}, "
+                     f"filters_per_discriminator={config['filters_per_discriminator']}, "
+                     f"num_classes={config['num_classes']}")
         log_print("")
         
         # Contar parâmetros
