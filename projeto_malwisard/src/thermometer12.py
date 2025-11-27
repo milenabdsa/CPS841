@@ -41,7 +41,10 @@ range_max= 100 if LIGHT else 9000
 range_increase=100 if LIGHT else 1000
 # Process both train and validation datasets
 for dataset_type in ['train', 'val']:
+    if dataset_type == 'val':
+        range_max = 6000            
     for i in range(0,range_max,range_increase):
+
         # ==================================== #
         # DEBUG OPTIONS
         inicio = i
