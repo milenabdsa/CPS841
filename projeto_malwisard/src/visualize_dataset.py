@@ -51,6 +51,11 @@ def plot_class_distribution(data):
     for i, count in enumerate(counts):
         plt.text(i, count, str(count), ha='center', va='bottom')
     
+    # Save the plot
+    output_filename = 'class_distribution.png'
+    plt.savefig(output_filename, dpi=300, bbox_inches='tight')
+    print(f"Plot saved as {output_filename}")
+    
     plt.show()
 
 if __name__ == '__main__':
