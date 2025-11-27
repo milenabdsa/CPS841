@@ -60,7 +60,7 @@ def plot_class_distribution(data):
 
 if __name__ == '__main__':
     # Specify the path to your pickle file
-    pickle_path = 'y26_val.p'
+    pickle_path = 'y26.p'
     
     # Load data
     print(f"Loading data from {pickle_path}...")
