@@ -1,0 +1,13 @@
+Loading Malevis dataset...
+Shape: (9100, 150528), Classes: 26
+Parameters: tuple_size=8, bloom_size=1000
+
+Training BloomWisard on Malevis...
+Training time: 34.15 seconds
+
+Evaluating...
+Evaluation time: 96.10 seconds
+
+Accuracy: 3326/5126 (64.88%)
+
+Done
