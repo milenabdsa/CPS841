@@ -6,7 +6,7 @@
 
 namespace py = pybind11;
 
-PYBIND11_MODULE(wnn, m){
+PYBIND11_MODULE(bloomwisard, m){
 
     py::class_<Discriminator>(m, "Discriminator")
       .def(py::init<int,int>())

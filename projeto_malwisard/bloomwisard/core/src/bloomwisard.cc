@@ -83,7 +83,7 @@ public:
         //Initialize results with numpy array
         /*py::array_t<int> a({ data.size(), data.size() });
         auto result = a.mutable_unchecked();*/
-        py::array_t<int> a({data.size()});
+        py::array_t<int> a(static_cast<ssize_t>(data.size()));
         auto label = a.mutable_unchecked();
 
         unsigned int i;
@@ -117,7 +117,7 @@ public:
 
     py::array_t<unsigned long int> stats()
     {
-        py::array_t<unsigned long int> a({5});
+        py::array_t<unsigned long int> a(static_cast<ssize_t>(5));
         auto stats = a.mutable_unchecked();
 
         int numRams = bloomDiscriminators[0]->getNumRams();
