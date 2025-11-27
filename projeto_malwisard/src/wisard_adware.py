@@ -100,21 +100,51 @@ print("Done!")
 # =========================================================================================================#
 print("Importing data...")
 
-X = pickle.load( open( "thermometer12_X.p", "rb" ) )
-y = pickle.load( open( "thermometer12_y.p", "rb" ) )
-X_new = []
-y_new = []
+with open("thermometer12_train_X.p", "rb") as input_file:
+  X_train = pd.read_pickle(input_file, compression=None)
+
+print("X_train imported")
+
+with open("thermometer12_train_y.p", "rb") as input_file:
+  y_train = pd.read_pickle(input_file, compression=None)
+
+print("y_train imported")
+
+# Load validation data
+with open("thermometer12_val_X.p", "rb") as input_file:
+  X_val = pd.read_pickle(input_file, compression=None)
+
+print("X_val imported")
+
+with open("thermometer12_val_y.p", "rb") as input_file:
+  y_val = pd.read_pickle(input_file, compression=None)
+
+print("y_val imported")
+X_train_new = []
+y_train_new = []
 
 print("Class: " + classes)
 
-for i in range(len(y)):
-  if y[i] in allClasses[classes]:
-    X_new.append(X[i])
-    y_new.append(y[i])
+for i in range(len(y_train)):
+  if y_train[i] in allClasses[classes]:
+    X_train_new.append(X_train[i])
+    y_train_new.append(y_train[i])
 
-X = X_new
-y = y_new
+X_train = X_train_new
+y_train = y_train_new
 
+X_val_new = []
+y_val_new = []
+
+print("Class: " + classes)
+
+for i in range(len(y_val)):
+  if y_val[i] in allClasses[classes]:
+    X_val_new.append(X_val[i])
+    y_val_new.append(y_val[i])
+
+X_val = X_val_new
+y_val = y_val_new
 print("Done!")
 
 # =========================================================================================================#
@@ -130,35 +160,30 @@ train = []
 test = []
 
 for i in range(numberOfRuns):
-    X_traincv, X_testcv, y_traincv, y_testcv = model_selection.train_test_split(X,
-                                                   	                            y,
-                                                                            	  test_size=SPLIT_SIZE,
-                                                                            	  random_state=0)
     
     if wisard:
         print("WiSARD")
         wsd = wp.Wisard(addressSize, bleachingActivated = bleachingActivated, ignoreZero = ignoreZero, verbose = True)
 
         start_train = time.time()
-        wsd.train(X_traincv,y_traincv)
+        wsd.train(X_train,y_train)
         finish_train = time.time()
 
         start_classify = time.time()
-        out = wsd.classify(X_testcv)
+        out = wsd.classify(X_val)
         finish_classify = time.time()
 
         total = 0
         corrects = 0
-        for count in range(len(y_testcv)):
-            if y_testcv[count] == out[count]:
+        for count in range(len(y_val)):
+            if y_val[count] == out[count]:
                 corrects = corrects + 1
             total = total + 1
 
-        clf_eval(confusionPlotFilename, y_testcv, out, classes = list(dict.fromkeys(y)))
-
-        f1.append(f1_score(y_testcv, out,average='weighted'))
-        precision.append(precision_score(y_testcv, out, average='weighted'))
-        recall.append(recall_score(y_testcv, out, average='weighted'))
+        clf_eval(confusionPlotFilename, y_val, out, classes = list(dict.fromkeys(y_val)))
+        f1.append(f1_score(y_val, out,average='weighted'))
+        precision.append(precision_score(y_val, out, average='weighted'))
+        recall.append(recall_score(y_val, out, average='weighted'))
         accuracy.append(float(corrects)/total)
         train.append(finish_train-start_train)
         test.append(finish_classify-start_classify)
