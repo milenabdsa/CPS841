@@ -8,7 +8,7 @@ print("Importing data...")
 
 # Configuration
 preproc = "thermometer12_"
-dataset_type = "train"  # Change to "val" for validation data
+dataset_type = "val"  # Change to "val" for validation data
 
 # Define ranges for file chunks
 ranges = [
@@ -22,7 +22,18 @@ ranges = [
     (7000, 7999),
     (8000, 8999),
     (9000, 9099)
+] 
+ranges_ = [
+    (0, 999),
+    (1000, 1999),
+    (2000, 2999),
+    (3000, 3999),
+    (4000, 4999),
+    (5000, 5999),
 ]
+
+if dataset_type == "val":
+    ranges = ranges_
 
 print(f"File prefix: {preproc}{dataset_type}_")
 print("Loading and joining chunks...")
