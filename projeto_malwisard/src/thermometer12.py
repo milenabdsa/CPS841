@@ -24,24 +24,31 @@ interpolate = False
 FACTOR = 224
 # ==================================== #
 # WHICH BINARIZATION DO YOU WANT TO USE?
-simple = False
+simple = True
 THRESHOLD = 127
 
 dynamic = False
 
-thermometer = True
+thermometer = False
 N = 12
 
 circularThermometer = False
 nBits = 4
 
+LIGHT= False
+
+range_max= 100 if LIGHT else 9000 
+range_increase=100 if LIGHT else 1000
 # Process both train and validation datasets
 for dataset_type in ['train', 'val']:
-    for i in range(0,10000,1000):
+    if dataset_type == 'val':
+        range_max = 6000            
+    for i in range(0,range_max,range_increase):
+
         # ==================================== #
         # DEBUG OPTIONS
         inicio = i
-        fim = i + 1000 if i + 1000 < 9101 else 9100
+        fim = i + range_increase if i + range_increase < 9101 else 9100
         tamanho = fim-inicio
 
         # ==================================== #
@@ -90,7 +97,7 @@ for dataset_type in ['train', 'val']:
         # ========================================== RESHAPING ====================================================#
         # =========================================================================================================#
         print("Reshaping...")   
-        data = np.array(data).reshape(tamanho, 224*224*3)
+        data = np.array(data).reshape(-1, 224*224*3)
         print("Done!")
 
         # =========================================================================================================#

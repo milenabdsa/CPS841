@@ -1,6 +1,7 @@
 ==============================
 ===== EXPERIMENT RESULTS =====
 ==============================
+<<<<<<<< HEAD:projeto_malwisard/thermometer12_6classes_500.txt
 F1-score mean: 0.6581215546942291
 F1-score std: 0.0
 Precision mean: 0.7179429640018701
@@ -14,5 +15,20 @@ Time to train mean: 2.7547168731689453
 Time to train std: 0.0
 Testing size: 150
 Time to test mean: 3.0702788829803467
+========
+F1-score mean: 0.7582309772193687
+F1-score std: 0.0
+Precision mean: 0.8060562616956395
+Precision std: 0.0
+Recall mean: 0.7680452594615684
+Recall std: 0.0
+Accuracy mean: 0.7680452594615684
+Accuracy std: 0.0
+Training size: 9100
+Time to train mean: 59.19784903526306
+Time to train std: 0.0
+Testing size: 5126
+Time to test mean: 67.31078696250916
+>>>>>>>> a44fc74b5e3c913c39ddc0971162bfbd7606a7c0:projeto_malwisard/thermometer12_6classes.txt
 Time to test std: 0.0
 ==============================

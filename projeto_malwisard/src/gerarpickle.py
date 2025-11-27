@@ -40,7 +40,7 @@ class_mapping = {
     'Stantinko': {'y_26': 'Stantinko', 'y_2': 'Malign', 'y_6': 'Backdoor'},
     'VBA': {'y_26': 'VBA', 'y_2': 'Malign', 'y_6': 'Virus'},
     'VBKrypt': {'y_26': 'VBKrypt', 'y_2': 'Malign', 'y_6': 'Trojan'},
-    'Vilsel': {'y_26': 'MultiPlug', 'y_2': 'Malign', 'y_6': 'Trojan'}
+    'Vilsel': {'y_26': 'Vilsel', 'y_2': 'Malign', 'y_6': 'Trojan'}
 }
 
 data = []
