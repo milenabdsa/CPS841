@@ -1,0 +1,18 @@
+==============================
+===== EXPERIMENT RESULTS =====
+==============================
+F1-score mean: 0.10119672531507752
+F1-score std: 0.0
+Precision mean: 0.06333185618625997
+Precision std: 0.0
+Recall mean: 0.2516582130316036
+Recall std: 0.0
+Accuracy mean: 0.2516582130316036
+Accuracy std: 0.0
+Training size: 9100
+Time to train mean: 160.82616877555847
+Time to train std: 0.0
+Testing size: 5126
+Time to test mean: 34702.1121070385
+Time to test std: 0.0
+==============================

@@ -24,20 +24,23 @@ interpolate = False
 FACTOR = 224
 # ==================================== #
 # WHICH BINARIZATION DO YOU WANT TO USE?
-simple = True
+simple = False
 THRESHOLD = 127
 
 dynamic = False
 
-thermometer = False
+thermometer = True
 N = 12
+
+# Choose encoding style
+THERMOMETER_STYLE = "one-hot"  # "one-hot" (old style) or "cumulative" (true thermometer)
 
 circularThermometer = False
 nBits = 4
 
 LIGHT= False
 
-range_max= 100 if LIGHT else 9000 
+range_max= 100 if LIGHT else 10000 
 range_increase=100 if LIGHT else 1000
 # Process both train and validation datasets
 for dataset_type in ['train', 'val']:
@@ -78,8 +81,11 @@ for dataset_type in ['train', 'val']:
         #y_6 = pickle.load( open( "y6.p", "rb" ) )
         print("Done!")
 
-        data = data[inicio:fim]
-        y = y[inicio:fim]
+        # Ajustar fim para não ultrapassar o tamanho real dos dados
+        fim_real = min(fim, len(data))
+        data = data[inicio:fim_real]
+        y = y[inicio:fim_real]
+        tamanho = len(data)  # Atualizar tamanho com o valor real
 
         # =========================================================================================================#
         # ========================================== INTERPOLATION ================================================#
@@ -115,15 +121,39 @@ for dataset_type in ['train', 'val']:
             X = data
 
         if thermometer:
-            X = [[0 for i in range(224*224*N)] for j in range(tamanho)]
+            if THERMOMETER_STYLE == "one-hot":
+                print("One-hot encoding")
+                X = np.zeros((tamanho, 224*224*N), dtype=np.uint8)
+                for j in range(tamanho):
+                    if j % 100 == 0:
+                        print(f"  Processing image {j}/{tamanho}...")
+                    
+                    img = data[j][:224*224]  
+                    levels = np.floor(img * N / 256).astype(int)
+                    levels = np.clip(levels, 0, N-1)
+                    
+                    indices = N * np.arange(len(img)) + levels
+                    X[j, indices] = 1
+                
+                print("  One-hot encoding complete!")
+                
+            elif THERMOMETER_STYLE == "cumulative":
+                print("Thermometer encoding (optimized - true thermometer)...")
+                X = np.zeros((tamanho, 224*224*3*N), dtype=np.uint8)
 
-            for j in range(tamanho):
-                # print(j)
-                for i in range(224*224):
-                    for k in range(N):
-                        if data[j][i] >= k*256/N and data[j][i] < (k+1)*256/N:
-                            X[j][N*i+k] = 1
-                            break
+                for j in range(tamanho):
+                    if j % 100 == 0:
+                        print(f"  Processing image {j}/{tamanho}...")
+                    
+                    img = data[j]
+                    levels = np.floor(img * N / 256).astype(int)
+                    levels = np.clip(levels, 0, N-1)
+
+                    for i in range(len(img)):
+                        level = levels[i]
+                        X[j, N*i:N*i + level + 1] = 1
+                
+                print("  Thermometer encoding complete!")
 
         if circularThermometer:
             X = [[0 for i in range(224*224*nBits)] for j in range(tamanho)]
