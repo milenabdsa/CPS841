@@ -38,13 +38,23 @@ import numpy as np
 
 # The H3 hash is pretty slow to evaluate in Python, so instead I use a libtorch
 # C++ extension, which is compiled here if it's not already up-to-date
-from torch.utils.cpp_extension import load
-base_dir = os.path.dirname(__file__)
-build_dir = os.path.join(base_dir, "./build")
-if not os.path.exists(build_dir):
-    os.mkdir(build_dir)
-print("Building CPP sources (if needed); this may take a while")
-h3_hash_cpp = load(name="h3_hash_cpp", sources=[os.path.join(base_dir, "./cpp/h3_hash.cpp")], build_directory=build_dir)
+# If C++ compilation fails (e.g., no compiler available), fall back to Python
+try:
+    from torch.utils.cpp_extension import load
+    base_dir = os.path.dirname(__file__)
+    build_dir = os.path.join(base_dir, "./build")
+    if not os.path.exists(build_dir):
+        os.mkdir(build_dir)
+    print("Building CPP sources (if needed); this may take a while")
+    h3_hash_cpp = load(name="h3_hash_cpp", sources=[os.path.join(base_dir, "./cpp/h3_hash.cpp")], build_directory=build_dir)
+    USE_CPP_HASH = True
+    print("Using C++ accelerated H3 hash")
+except Exception as e:
+    print(f"Warning: C++ compilation failed ({e})")
+    print("Falling back to Python implementation of H3 hash (slower but functional)")
+    from . import h3_hash_python
+    h3_hash_cpp = h3_hash_python
+    USE_CPP_HASH = False
 
 # Computes hash functions within the H3 family of integer-integer hashing 
 # functions, as described by Carter and Wegman in the paper
