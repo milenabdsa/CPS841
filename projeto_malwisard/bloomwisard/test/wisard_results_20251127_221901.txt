@@ -1,0 +1,74 @@
+Loading Malevis dataset...
+Shape: (9100, 150528), Classes: 26
+Parameters: tuple_size=10, bloom_size=2000
+
+Training BloomWisard on Malevis...
+Training time: 38.70 seconds
+
+Evaluating...
+Evaluation time: 160.90 seconds
+
+Accuracy: 3971/5126 (77.47%)
+
+Done
+
+Model Info:
+Number of Bloom Discriminators = 26
+Bloom Discriminator 0: Entry = 150528, Tuples = 10, RAMs = 15053, Bit Memory = 19171 bits, capacity = 2000, error = 0.01, Num Hashes = 7
+Total Bits = 288581063
+Bloom Discriminator 1: Entry = 150528, Tuples = 10, RAMs = 15053, Bit Memory = 19171 bits, capacity = 2000, error = 0.01, Num Hashes = 7
+Total Bits = 288581063
+Bloom Discriminator 2: Entry = 150528, Tuples = 10, RAMs = 15053, Bit Memory = 19171 bits, capacity = 2000, error = 0.01, Num Hashes = 7
+Total Bits = 288581063
+Bloom Discriminator 3: Entry = 150528, Tuples = 10, RAMs = 15053, Bit Memory = 19171 bits, capacity = 2000, error = 0.01, Num Hashes = 7
+Total Bits = 288581063
+Bloom Discriminator 4: Entry = 150528, Tuples = 10, RAMs = 15053, Bit Memory = 19171 bits, capacity = 2000, error = 0.01, Num Hashes = 7
+Total Bits = 288581063
+Bloom Discriminator 5: Entry = 150528, Tuples = 10, RAMs = 15053, Bit Memory = 19171 bits, capacity = 2000, error = 0.01, Num Hashes = 7
+Total Bits = 288581063
+Bloom Discriminator 6: Entry = 150528, Tuples = 10, RAMs = 15053, Bit Memory = 19171 bits, capacity = 2000, error = 0.01, Num Hashes = 7
+Total Bits = 288581063
+Bloom Discriminator 7: Entry = 150528, Tuples = 10, RAMs = 15053, Bit Memory = 19171 bits, capacity = 2000, error = 0.01, Num Hashes = 7
+Total Bits = 288581063
+Bloom Discriminator 8: Entry = 150528, Tuples = 10, RAMs = 15053, Bit Memory = 19171 bits, capacity = 2000, error = 0.01, Num Hashes = 7
+Total Bits = 288581063
+Bloom Discriminator 9: Entry = 150528, Tuples = 10, RAMs = 15053, Bit Memory = 19171 bits, capacity = 2000, error = 0.01, Num Hashes = 7
+Total Bits = 288581063
+Bloom Discriminator 10: Entry = 150528, Tuples = 10, RAMs = 15053, Bit Memory = 19171 bits, capacity = 2000, error = 0.01, Num Hashes = 7
+Total Bits = 288581063
+Bloom Discriminator 11: Entry = 150528, Tuples = 10, RAMs = 15053, Bit Memory = 19171 bits, capacity = 2000, error = 0.01, Num Hashes = 7
+Total Bits = 288581063
+Bloom Discriminator 12: Entry = 150528, Tuples = 10, RAMs = 15053, Bit Memory = 19171 bits, capacity = 2000, error = 0.01, Num Hashes = 7
+Total Bits = 288581063
+Bloom Discriminator 13: Entry = 150528, Tuples = 10, RAMs = 15053, Bit Memory = 19171 bits, capacity = 2000, error = 0.01, Num Hashes = 7
+Total Bits = 288581063
+Bloom Discriminator 14: Entry = 150528, Tuples = 10, RAMs = 15053, Bit Memory = 19171 bits, capacity = 2000, error = 0.01, Num Hashes = 7
+Total Bits = 288581063
+Bloom Discriminator 15: Entry = 150528, Tuples = 10, RAMs = 15053, Bit Memory = 19171 bits, capacity = 2000, error = 0.01, Num Hashes = 7
+Total Bits = 288581063
+Bloom Discriminator 16: Entry = 150528, Tuples = 10, RAMs = 15053, Bit Memory = 19171 bits, capacity = 2000, error = 0.01, Num Hashes = 7
+Total Bits = 288581063
+Bloom Discriminator 17: Entry = 150528, Tuples = 10, RAMs = 15053, Bit Memory = 19171 bits, capacity = 2000, error = 0.01, Num Hashes = 7
+Total Bits = 288581063
+Bloom Discriminator 18: Entry = 150528, Tuples = 10, RAMs = 15053, Bit Memory = 19171 bits, capacity = 2000, error = 0.01, Num Hashes = 7
+Total Bits = 288581063
+Bloom Discriminator 19: Entry = 150528, Tuples = 10, RAMs = 15053, Bit Memory = 19171 bits, capacity = 2000, error = 0.01, Num Hashes = 7
+Total Bits = 288581063
+Bloom Discriminator 20: Entry = 150528, Tuples = 10, RAMs = 15053, Bit Memory = 19171 bits, capacity = 2000, error = 0.01, Num Hashes = 7
+Total Bits = 288581063
+Bloom Discriminator 21: Entry = 150528, Tuples = 10, RAMs = 15053, Bit Memory = 19171 bits, capacity = 2000, error = 0.01, Num Hashes = 7
+Total Bits = 288581063
+Bloom Discriminator 22: Entry = 150528, Tuples = 10, RAMs = 15053, Bit Memory = 19171 bits, capacity = 2000, error = 0.01, Num Hashes = 7
+Total Bits = 288581063
+Bloom Discriminator 23: Entry = 150528, Tuples = 10, RAMs = 15053, Bit Memory = 19171 bits, capacity = 2000, error = 0.01, Num Hashes = 7
+Total Bits = 288581063
+Bloom Discriminator 24: Entry = 150528, Tuples = 10, RAMs = 15053, Bit Memory = 19171 bits, capacity = 2000, error = 0.01, Num Hashes = 7
+Total Bits = 288581063
+Bloom Discriminator 25: Entry = 150528, Tuples = 10, RAMs = 15053, Bit Memory = 19171 bits, capacity = 2000, error = 0.01, Num Hashes = 7
+Total Bits = 288581063
+
+Done
+
+============================================================
+Results saved to: wisard_results_20251127_221901.txt
+============================================================

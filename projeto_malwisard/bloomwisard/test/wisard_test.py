@@ -49,7 +49,7 @@ if USE_MALEVIS:
     
     num_inputs = X_train.shape[1]
     num_classes = len(label_map)
-    tuple_size = 8
+    tuple_size = 12
     bloom_size = 1000
     
     log_print(f"Shape: {X_train.shape}, Classes: {num_classes}")
